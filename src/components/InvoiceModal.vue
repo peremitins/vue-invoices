@@ -1,9 +1,9 @@
 <template>
   <div @click="checkClick" ref="invoiceWrap" class="invoice-wrap flex flex-column">
     <form @submit.prevent="submitForm" class="invoice-content">
-      <!-- <Loading v-show="loading" /> -->
-      <h1 v-if="!editInvoice">New Invoice</h1>
-      <h1 v-else>Edit Invoice</h1>
+      <Loading v-show="loading" />
+      <!-- <h1 v-if="!editInvoice">New Invoice</h1> -->
+      <h1 >Edit Invoice</h1>
 
       <!-- Bill From -->
       <div class="bill-from flex flex-column">
@@ -113,9 +113,9 @@
           <button type="button" @click="closeInvoice" class="red">Cancel</button>
         </div>
         <div class="right flex">
-          <button v-if="!editInvoice" type="submit" @click="saveDraft" class="dark-purple">Save Draft</button>
-          <button v-if="!editInvoice" type="submit" @click="publishInvoice" class="purple">Create Invoice</button>
-          <button v-if="editInvoice" type="sumbit" class="purple">Update Invoice</button>
+          <button type="submit" @click="saveDraft" class="dark-purple">Save Draft</button>
+          <button type="submit" @click="uploadInvoice" class="purple">Create Invoice</button>
+          <button type="sumbit" class="purple">Update Invoice</button>
         </div>
       </div>
     </form>
@@ -123,10 +123,11 @@
 </template>
 
 <script>
-// import db from "../firebase/firebaseInit";
-// import Loading from "../components/Loading";
+import db from "../firebase/firebaseInit";
+import { collection, addDoc } from "firebase/firestore"; 
+import Loading from "../components/Loading";
 import { mapMutations } from "vuex";
-// import { uid } from "uid";
+import { uid } from "uid";
 export default {
   name: "invoiceModal",
   data() {
@@ -157,39 +158,39 @@ export default {
     };
   },
   components: {
-    // Loading,
+    Loading,
   },
   created() {
     // get current date for invoice date field
     // if (!this.editInvoice) {
-    //   this.invoiceDateUnix = Date.now();
-    //   this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString("en-us", this.dateOptions);
+      this.invoiceDateUnix = Date.now();
+      this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString("en-us", this.dateOptions);
     // }
 
-    if (this.editInvoice) {
-      const currentInvoice = this.currentInvoiceArray[0];
-      this.docId = currentInvoice.docId;
-      this.billerStreetAddress = currentInvoice.billerStreetAddress;
-      this.billerCity = currentInvoice.billerCity;
-      this.billerZipCode = currentInvoice.billerZipCode;
-      this.billerCountry = currentInvoice.billerCountry;
-      this.clientName = currentInvoice.clientName;
-      this.clientEmail = currentInvoice.clientEmail;
-      this.clientStreetAddress = currentInvoice.clientStreetAddress;
-      this.clientCity = currentInvoice.clientCity;
-      this.clientZipCode = currentInvoice.clientZipCode;
-      this.clientCountry = currentInvoice.clientCountry;
-      this.invoiceDateUnix = currentInvoice.invoiceDateUnix;
-      this.invoiceDate = currentInvoice.invoiceDate;
-      this.paymentTerms = currentInvoice.paymentTerms;
-      this.paymentDueDateUnix = currentInvoice.paymentDueDateUnix;
-      this.paymentDueDate = currentInvoice.paymentDueDate;
-      this.productDescription = currentInvoice.productDescription;
-      this.invoicePending = currentInvoice.invoicePending;
-      this.invoiceDraft = currentInvoice.invoiceDraft;
-      this.invoiceItemList = currentInvoice.invoiceItemList;
-      this.invoiceTotal = currentInvoice.invoiceTotal;
-    }
+    // if (this.editInvoice) {
+      // const currentInvoice = this.currentInvoiceArray[0];
+      // this.docId = currentInvoice.docId;
+      // this.billerStreetAddress = currentInvoice.billerStreetAddress;
+      // this.billerCity = currentInvoice.billerCity;
+      // this.billerZipCode = currentInvoice.billerZipCode;
+      // this.billerCountry = currentInvoice.billerCountry;
+      // this.clientName = currentInvoice.clientName;
+      // this.clientEmail = currentInvoice.clientEmail;
+      // this.clientStreetAddress = currentInvoice.clientStreetAddress;
+      // this.clientCity = currentInvoice.clientCity;
+      // this.clientZipCode = currentInvoice.clientZipCode;
+      // this.clientCountry = currentInvoice.clientCountry;
+      // this.invoiceDateUnix = currentInvoice.invoiceDateUnix;
+      // this.invoiceDate = currentInvoice.invoiceDate;
+      // this.paymentTerms = currentInvoice.paymentTerms;
+      // this.paymentDueDateUnix = currentInvoice.paymentDueDateUnix;
+      // this.paymentDueDate = currentInvoice.paymentDueDate;
+      // this.productDescription = currentInvoice.productDescription;
+      // this.invoicePending = currentInvoice.invoicePending;
+      // this.invoiceDraft = currentInvoice.invoiceDraft;
+      // this.invoiceItemList = currentInvoice.invoiceItemList;
+      // this.invoiceTotal = currentInvoice.invoiceTotal;
+    // }
   },
   methods: {
     ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
@@ -204,83 +205,80 @@ export default {
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
-      if (this.editInvoice) {
-        this.TOGGLE_EDIT_INVOICE();
-      }
+      // if (this.editInvoice) {
+      //   this.TOGGLE_EDIT_INVOICE();
+      // }
     },
 
-    // addNewInvoiceItem() {
-    //   this.invoiceItemList.push({
-    //     id: uid(),
-    //     itemName: "",
-    //     qty: "",
-    //     price: 0,
-    //     total: 0,
-    //   });
-    // },
+    addNewInvoiceItem() {
+      this.invoiceItemList.push({
+        id: uid(),
+        itemName: "",
+        qty: "",
+        price: 0,
+        total: 0,
+      });
+    },
 
-    // deleteInvoiceItem(id) {
-    //   this.invoiceItemList = this.invoiceItemList.filter((item) => item.id !== id);
-    // },
+    deleteInvoiceItem(id) {
+      this.invoiceItemList = this.invoiceItemList.filter((item) => item.id !== id);
+    },
 
-    // calInvoiceTotal() {
-    //   this.invoiceTotal = 0;
-    //   this.invoiceItemList.forEach((item) => {
-    //     this.invoiceTotal += item.total;
-    //   });
-    // },
+    calInvoiceTotal() {
+      this.invoiceTotal = 0;
+      this.invoiceItemList.forEach((item) => {
+        this.invoiceTotal += item.total;
+      });
+    },
 
-    // publishInvoice() {
-    //   this.invoicePending = true;
-    // },
+    publishInvoice() {
+      this.invoicePending = true;
+    },
 
-    // saveDraft() {
-    //   this.invoiceDraft = true;
-    // },
+    saveDraft() {
+      this.invoiceDraft = true;
+    },
 
-    // async uploadInvoice() {
-    //   if (this.invoiceItemList.length <= 0) {
-    //     alert("Please ensure you filled out work items!");
-    //     return;
-    //   }
+    async uploadInvoice() {
+      if (this.invoiceItemList.length <= 0) {
+        alert("Please ensure you filled out work items!");
+        return;
+      }
 
-    //   this.loading = true;
+      this.loading = true;
 
-    //   this.calInvoiceTotal();
+      this.calInvoiceTotal();
 
-    //   const dataBase = db.collection("invoices").doc();
+      await addDoc(collection(db, "invoices"), {
+        invoiceId: uid(6),
+        billerStreetAddress: this.billerStreetAddress,
+        billerCity: this.billerCity,
+        billerZipCode: this.billerZipCode,
+        billerCountry: this.billerCountry,
+        clientName: this.clientName,
+        clientEmail: this.clientEmail,
+        clientStreetAddress: this.clientStreetAddress,
+        clientCity: this.clientCity,
+        clientZipCode: this.clientZipCode,
+        clientCountry: this.clientCountry,
+        invoiceDate: this.invoiceDate,
+        invoiceDateUnix: this.invoiceDateUnix,
+        paymentTerms: this.paymentTerms,
+        paymentDueDate: this.paymentDueDate,
+        paymentDueDateUnix: this.paymentDueDateUnix,
+        productDescription: this.productDescription,
+        invoiceItemList: this.invoiceItemList,
+        invoiceTotal: this.invoiceTotal,
+        invoicePending: this.invoicePending,
+        invoiceDraft: this.invoiceDraft,
+        invoicePaid: null,
+      });
+      this.loading = false;
 
-    //   await dataBase.set({
-    //     invoiceId: uid(6),
-    //     billerStreetAddress: this.billerStreetAddress,
-    //     billerCity: this.billerCity,
-    //     billerZipCode: this.billerZipCode,
-    //     billerCountry: this.billerCountry,
-    //     clientName: this.clientName,
-    //     clientEmail: this.clientEmail,
-    //     clientStreetAddress: this.clientStreetAddress,
-    //     clientCity: this.clientCity,
-    //     clientZipCode: this.clientZipCode,
-    //     clientCountry: this.clientCountry,
-    //     invoiceDate: this.invoiceDate,
-    //     invoiceDateUnix: this.invoiceDateUnix,
-    //     paymentTerms: this.paymentTerms,
-    //     paymentDueDate: this.paymentDueDate,
-    //     paymentDueDateUnix: this.paymentDueDateUnix,
-    //     productDescription: this.productDescription,
-    //     invoiceItemList: this.invoiceItemList,
-    //     invoiceTotal: this.invoiceTotal,
-    //     invoicePending: this.invoicePending,
-    //     invoiceDraft: this.invoiceDraft,
-    //     invoicePaid: null,
-    //   });
+      this.TOGGLE_INVOICE();
 
-    //   this.loading = false;
-
-    //   this.TOGGLE_INVOICE();
-
-    //   this.GET_INVOICES();
-    // },
+      // this.GET_INVOICES();
+    },
 
     // async updateInvoice() {
     //   if (this.invoiceItemList.length <= 0) {
@@ -334,13 +332,13 @@ export default {
   computed: {
     // ...mapState(["editInvoice", "currentInvoiceArray"]),
   },
-  // watch: {
-  //   paymentTerms() {
-  //     const futureDate = new Date();
-  //     this.paymentDueDateUnix = futureDate.setDate(futureDate.getDate() + parseInt(this.paymentTerms));
-  //     this.paymentDueDate = new Date(this.paymentDueDateUnix).toLocaleDateString("en-us", this.dateOptions);
-  //   },
-  // },
+  watch: {
+    paymentTerms() {
+      const futureDate = new Date();
+      this.paymentDueDateUnix = futureDate.setDate(futureDate.getDate() + parseInt(this.paymentTerms));
+      this.paymentDueDate = new Date(this.paymentDueDateUnix).toLocaleDateString("en-us", this.dateOptions);
+    },
+  },
 };
 </script>
 
