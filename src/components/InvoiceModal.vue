@@ -197,11 +197,11 @@ export default {
 
     // ...mapActions(["UPDATE_INVOICE", "GET_INVOICES"]),
 
-    // checkClick(e) {
-    //   if (e.target === this.$refs.invoiceWrap) {
-    //     this.TOGGLE_MODAL();
-    //   }
-    // },
+    checkClick(e) {
+      if (e.target === this.$refs.invoiceWrap) {
+        this.TOGGLE_MODAL();
+      }
+    },
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
@@ -348,8 +348,9 @@ export default {
   top: 0;
   left: 0;
   height: 100vh;
-  overflow-y: scroll;
-  box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  overflow: scroll;
+  z-index: 1;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -364,6 +365,7 @@ export default {
     width: 100%;
     background-color: #141625;
     color: #fff;
+    box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     h1 {
       margin-bottom: 48px;

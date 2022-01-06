@@ -28,10 +28,10 @@
       </div>
     </div>
     <!-- Invoices -->
-    <!-- <div v-if="invoiceData.length > 0">
+    <div v-if="invoiceData.length > 0">
       <Invoice v-for="(invoice, index) in filteredData" :invoice="invoice" :key="index" />
-    </div> -->
-    <div class="empty flex flex-column">
+    </div>
+    <div v-else class="empty flex flex-column">
       <img src="@/assets/illustration-empty.svg" alt="" />
       <h3>There is nothing here</h3>
       <p>Create a new invoice by clicking the New Invoice button and get started</p>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-// import Invoice from "../components/Invoice";
+import Invoice from "../components/Invoice";
 import { mapMutations, mapState } from "vuex";
 export default {
   name: "Home",
@@ -51,7 +51,7 @@ export default {
     };
   },
   components: {
-    // Invoice,
+    Invoice,
   },
   methods: {
     ...mapMutations(["TOGGLE_INVOICE"]),
