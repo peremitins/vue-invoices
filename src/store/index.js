@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import db from '../firebase/firebaseInit';
-import {  onSnapshot, collection, query } from "firebase/firestore"; 
+import {  onSnapshot, collection, query, deleteDoc, doc, updateDoc } from "firebase/firestore"; 
 
 export default createStore({
   state: {
@@ -9,6 +9,7 @@ export default createStore({
     modalActive: null,
     invoicesLoaded: null,
     currentInvoiceArray: null,
+    editInvoice: null,
   },
   mutations: {
     TOGGLE_INVOICE(state) {
@@ -24,9 +25,32 @@ export default createStore({
       state.invoicesLoaded = true;
     },
     SET_CURRENT_INVOICE(state, payload) {
-      state.currentInvoiceArray = state.invoiceData.filter(invoice => {
+      state.currentInvoiceArray = state.invoiceData.filter((invoice) => {
         return invoice.invoiceId === payload;
-      })
+      });
+    },
+    TOGGLE_EDIT_INVOICE(state) {
+      state.editInvoice = !state.editInvoice;
+    },
+    DELETE_INVOICE(state, payload) {
+      state.invoiceData = state.invoiceData.filter((invoice) => invoice.docId !== payload);
+    },
+    UPDATE_STATUS_TO_PAID(state, payload) {
+      state.invoiceData.forEach((invoice) => {
+        if (invoice.docId === payload) {
+          invoice.invoicePaid = true;
+          invoice.invoicePending = false;
+        }
+      });
+    },
+    UPDATE_STATUS_TO_PENDING(state, payload) {
+      state.invoiceData.forEach((invoice) => {
+        if (invoice.docId === payload) {
+          invoice.invoicePaid = false;
+          invoice.invoicePending = true;
+          invoice.invoiceDraft = false;
+        }
+      });
     },
   },
   actions: {
@@ -60,13 +84,42 @@ export default createStore({
               invoiceDraft: doc.data().invoiceDraft,
               invoicePaid: doc.data().invoicePaid,
             };
-            commit('SET_INVOICE_DATA', data);
+            commit("SET_INVOICE_DATA", data);
           }
        })
       });
-      
-      commit('INVOICES_LOADED')
-    }
+      commit("INVOICES_LOADED");
+    },
+    async UPDATE_INVOICE({ commit, dispatch }, { docId, routeId}) {
+      commit("DELETE_INVOICE", docId);
+      await dispatch("GET_INVOICES");
+      commit("TOGGLE_INVOICE");
+      commit("TOGGLE_EDIT_INVOICE");
+      commit("SET_CURRENT_INVOICE", routeId);
+    },
+    async DELETE_INVOICE({ commit }, docId) {
+      await deleteDoc(doc(db, "invoices", docId));
+      commit('DELETE_INVOICE', docId);
+    },
+    async UPDATE_STATUS_TO_PAID({ commit }, docId) {
+      const dataBase = doc(db, "invoices", docId);
+
+      await updateDoc(dataBase, {
+         invoicePaid: true,
+         invoicePending: false,
+      })
+      commit('UPDATE_STATUS_TO_PAID', docId);
+    },
+    async UPDATE_STATUS_TO_PENDING({ commit }, docId) {
+      const dataBase = doc(db, "invoices", docId);
+
+      await updateDoc(dataBase, {
+         invoicePaid: false,
+         invoicePending: true,
+         invoiceDraft: false,
+      })
+      commit('UPDATE_STATUS_TO_PENDING', docId);
+    },
   },
   modules: {
   }
