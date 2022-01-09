@@ -83,13 +83,17 @@ export default {
 button,
 .button {
   cursor: pointer;
-  padding: 16px 24px;
+  padding: 8px 10px;
   border-radius: 30px;
   border: none;
-  font-size: 12px;
+  font-size: 8px;
   margin-right: 8px;
   color: #fff;
   white-space: nowrap;
+  @media (min-width: 768px) {
+    padding: 16px 24px;
+    font-size: 12px;
+  }
 }
 .dark-purple {
   background-color: #252945;

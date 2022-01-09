@@ -153,6 +153,9 @@ export default {
 
 <style lang="scss" scoped>
 .invoice-view {
+    &.container {
+    padding: 40px 0;
+  }
   .nav-link {
     margin-bottom: 32px;
     align-items: center;
@@ -173,15 +176,20 @@ export default {
 
   .header {
     align-items: center;
-    padding: 24px 32px;
+    padding: 8px 10px;
     font-size: 12px;
-
+    @media (min-width: 768px) {
+      padding: 24px 32px;
+    }
     .left {
       align-items: center;
 
       span {
         color: #dfe3fa;
-        margin-right: 16px;
+        margin-right: 3px;
+        @media (min-width: 768px) {
+          margin-right: 16px;
+        }
       }
     }
 
@@ -196,9 +204,12 @@ export default {
   }
 
   .invoice-details {
-    padding: 48px;
-    margin-top: 24px;
-
+    padding: 8px 10px;
+    margin-top: 10px;
+    @media (min-width: 768px) {
+      padding: 48px;
+      margin-top: 24px;
+    }
     .top {
       div {
         color: #dfe3fa;
@@ -230,10 +241,15 @@ export default {
     }
 
     .middle {
-      margin-top: 50px;
+      margin-top: 15px;
       color: #dfe3fa;
-      gap: 16px;
-
+      gap: 5px;
+      flex-direction: column;
+      @media (min-width: 768px) {
+        gap: 16px;
+        flex-direction: row;
+        margin-top: 50px;
+      }
       h4 {
         font-size: 12px;
         font-weight: 400;
@@ -251,7 +267,10 @@ export default {
 
       .payment {
         h4:nth-child(3) {
-          margin-top: 32px;
+          margin-top: 15px;
+          @media (min-width: 768px) {
+            margin-top: 32px;
+          }
         }
 
         p {
@@ -278,17 +297,25 @@ export default {
     }
 
     .bottom {
-      margin-top: 50px;
+      margin-top: 15px;
+      @media (min-width: 768px) {
+        margin-top: 50px;
+      }
 
       .billing-items {
-        padding: 32px;
+        padding: 10px;
         border-radius: 20px 20px 0 0;
         background-color: #252945;
-
+        @media (min-width: 768px) {
+          padding: 32px;
+        }
         .heading {
           color: #dfe3fa;
           font-size: 12px;
-          margin-bottom: 32px;
+          margin-bottom: 10px;
+          @media (min-width: 768px) {
+            margin-bottom: 32px;
+          }
 
           p:first-child {
             flex: 3;
@@ -324,11 +351,13 @@ export default {
 
       .total {
         color: #fff;
-        padding: 32px;
+        padding: 10px;
         background-color: rgba(12, 14, 22, 0.7);
         align-items: center;
         border-radius: 0 0 20px 20px;
-
+        @media (min-width: 768px) {
+          padding: 32px;
+        }
         p {
           flex: 1;
           font-size: 12px;

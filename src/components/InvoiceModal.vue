@@ -359,34 +359,50 @@ export default {
 
   .invoice-content {
     position: relative;
-    padding: 56px;
+    padding: 40px;
     max-width: 700px;
     width: 100%;
     background-color: #141625;
     color: #fff;
     box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
+    @media (min-width: 768px) {
+      padding: 56px;
+    }
     h1 {
-      margin-bottom: 48px;
+      margin-bottom: 15px;
+      font-size: 28px;
       color: #fff;
+      @media (min-width: 768px) {
+        font-size: 32px;
+        margin-bottom: 48px;
+      }
     }
 
     h3 {
-      margin-bottom: 16px;
+      margin-bottom: 10px;
       font-size: 18px;
       color: #777f98;
+      @media (min-width: 768px) {
+        margin-bottom: 16px;
+      }
     }
 
     h4 {
       color: #7c5dfa;
       font-size: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 10px;
+      @media (min-width: 768px) {
+        margin-bottom: 24px;
+      }
     }
 
     // Bill To / Bill From
     .bill-to,
     .bill-from {
-      margin-bottom: 48px;
+      margin-bottom: 10px;
+      @media (min-width: 768px) {
+        margin-bottom: 48px;
+      }
 
       .location-details {
         gap: 16px;
@@ -413,9 +429,11 @@ export default {
           // Item Table Styling
           .table-heading,
           .table-items {
-            gap: 16px;
+            gap: 5px;
             font-size: 12px;
-
+            @media (min-width: 768px) {
+              gap: 16px;
+            }
             .item-name {
               flex-basis: 50%;
             }
@@ -444,14 +462,20 @@ export default {
 
           .table-items {
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 10px;
+            @media (min-width: 768px) {
+              margin-bottom: 24px;
+            }
 
             img {
               position: absolute;
-              top: 15px;
+              top: 6px;
               right: 0;
               width: 12px;
               height: 16px;
+              @media (min-width: 768px) {
+                top: 15px;
+              }
             }
           }
         }
@@ -471,8 +495,10 @@ export default {
     }
 
     .save {
-      margin-top: 60px;
-
+      margin-top: 15px;
+      @media (min-width: 768px) {
+        margin-top: 60px;
+      }
       div {
         flex: 1;
       }
@@ -484,7 +510,10 @@ export default {
   }
 
   .input {
-    margin-bottom: 24px;
+    margin-bottom: 15px;
+    @media (min-width: 768px) {
+      margin-bottom: 24px;
+    }
   }
 
   label {
@@ -498,8 +527,11 @@ export default {
     background-color: #1e2139;
     color: #fff;
     border-radius: 4px;
-    padding: 12px 4px;
+    padding: 4px 4px;
     border: none;
+    @media (min-width: 768px) {
+      padding: 12px 4px;
+    }
 
     &:focus {
       outline: none;

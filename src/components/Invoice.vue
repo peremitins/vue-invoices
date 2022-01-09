@@ -40,6 +40,7 @@ export default {
   padding: 8px 10px;
   background-color: #1e2139;
   align-items: center;
+
   @media (min-width: 768px) {
     padding: 28px 32px;
   }
@@ -61,7 +62,6 @@ export default {
 
     }
     span.person {
-        // width: 45px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
