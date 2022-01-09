@@ -359,7 +359,7 @@ export default {
 
   .invoice-content {
     position: relative;
-    padding: 40px;
+    padding: 40px 40px 65px;
     max-width: 700px;
     width: 100%;
     background-color: #141625;

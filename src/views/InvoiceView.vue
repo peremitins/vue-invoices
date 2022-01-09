@@ -329,10 +329,12 @@ export default {
         }
 
         .item {
-          margin-bottom: 32px;
+          margin-bottom: 10px;
           font-size: 13px;
           color: #fff;
-
+          @media (min-width: 768px) {
+            margin-bottom: 32px;
+          }
           &:last-child {
             margin-bottom: 0;
           }
