@@ -52,9 +52,12 @@ export default {
     flex-direction: row !important;
   }
   .app-content {
-    padding: 0 20px;
+    padding: 0 10px;
     flex: 1;
     position: relative;
+    @media (min-width: 768px) {
+      padding: 0 20px;
+    }
   }
 }
 .mobile-message {
@@ -125,18 +128,35 @@ button,
 }
 // Status Button Styling
 .status-button {
+  span {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
   &::before {
     content: "";
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 0px;
+    @media (min-width: 768px) {
+      margin-right: 8px;
+    }
   }
   font-size: 12px;
-  margin-right: 30px;
+  margin-right: 0px;
   align-items: center;
-  padding: 8px 30px;
+  padding: 5px 5px;
   border-radius: 10px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 768px) {
+    padding: 8px 0px;
+    margin-right: 30px;
+    width: 95px;
+  }
 }
 .paid {
   &::before {

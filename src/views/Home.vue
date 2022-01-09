@@ -98,15 +98,32 @@ export default {
 
   .header {
     margin-bottom: 65px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
 
     .left,
     .right {
       flex: 1;
     }
+    
+    .left {
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 28px;
+        }
+        span {
+          font-size: 16px;
+        }
+      }
+    }
 
     .right {
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
+      @media (min-width: 768px) {
+        justify-content: flex-end;
+      }
 
       .button,
       .filter {
@@ -114,6 +131,7 @@ export default {
 
         span {
           font-size: 12px;
+          white-space: nowrap;
         }
       }
 
@@ -150,20 +168,34 @@ export default {
       }
 
       .button {
-        padding: 8px 10px;
+        padding: 5px 5px;
         background-color: #7c5dfa;
-        border-radius: 40px;
+        border-radius: 50%;
+        
+        @media (min-width: 768px) {
+          border-radius: 40px;
+          padding: 8px 10px;
+        }
 
         .inner-button {
-          margin-right: 8px;
+          margin-right: 0px;
           border-radius: 50%;
           padding: 8px;
           align-items: center;
           justify-content: center;
           background-color: #fff;
+          @media (min-width: 768px) {
+            margin-right: 8px;
+          }
           img {
             width: 10px;
             height: 10px;
+          }
+        }
+        span {
+          display: none;
+          @media (min-width: 768px) {
+            display: block;
           }
         }
       }
@@ -193,4 +225,5 @@ export default {
     }
   }
 }
+
 </style>

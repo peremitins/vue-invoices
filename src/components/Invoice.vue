@@ -37,33 +37,65 @@ export default {
   margin-bottom: 16px;
   color: #fff;
   border-radius: 20px;
-  padding: 28px 32px;
+  padding: 8px 10px;
   background-color: #1e2139;
   align-items: center;
-
+  @media (min-width: 768px) {
+    padding: 28px 32px;
+  }
   span {
     font-size: 13px;
   }
-
+  
   .left {
     align-items: center;
-    flex-basis: 60%;
-    gap: 16px;
+    flex-basis: 100%;
+    gap: 5px;
+    @media (min-width: 768px) {
+      flex-basis: 60%;
+      gap: 16px;
+    }
 
     span {
       flex: 1;
+
+    }
+    span.person {
+        // width: 45px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        flex: 1 1 60%;
+      }
+    @media (max-width: 768px) {
+      span.due-date {
+        flex: 0 0 65px;
+      }
+      span.person {
+        width: 45px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        flex: 1 1 auto;
+      }
     }
 
     .tracking-number {
       text-transform: uppercase;
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
   }
 
   .right {
-    gap: 16px;
-    flex-basis: 40%;
+    gap: 5px;
+    flex-basis: auto;
     align-items: center;
-
+    @media (min-width: 768px) {
+      flex-basis: 40%;
+      gap: 16px;
+    }
     .price {
       flex: 1;
       font-size: 16px;

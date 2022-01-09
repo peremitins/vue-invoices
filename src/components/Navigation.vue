@@ -28,14 +28,20 @@ header {
     border-radius: 0 20px 20px 0;
     background-color: #7c5dfa;
     justify-content: center;
-    padding: 24px;
+    padding: 6px;
     @media (min-width: 900px) {
       width: 100%;
+    }
+    @media (min-width: 768px) {
+      padding: 24px;
     }
 
     img {
       width: auto;
-      height: 30px;
+      height: 20px;
+      @media (min-width: 768px) {
+        height: 30px;
+      }
     }
   }
 }

@@ -132,7 +132,7 @@ export default {
   name: "invoiceModal",
   data() {
     return {
-      dateOptions: { year: "numeric", month: "short", day: "numeric" },
+      dateOptions: { year: "numeric", month: "numeric", day: "numeric" },
       docId: null,
       loading: null,
       billerStreetAddress: null,
