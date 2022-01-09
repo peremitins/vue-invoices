@@ -101,7 +101,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 export default {
-  name: "invoiceView",
+  name: "InvoiceView",
   data() {
     return {
       currentInvoice: null,
@@ -116,7 +116,7 @@ export default {
     ...mapActions(["DELETE_INVOICE", "UPDATE_STATUS_TO_PENDING", "UPDATE_STATUS_TO_PAID"]),
 
     getCurrentInvoice() {
-      this.SET_CURRENT_INVOICE(this.$route.params.invoiceId);
+      this.SET_CURRENT_INVOICE(this.$route.params.id);
       this.currentInvoice = this.currentInvoiceArray[0];
     },
 

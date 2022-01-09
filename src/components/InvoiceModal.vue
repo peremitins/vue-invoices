@@ -73,7 +73,7 @@
         </div>
         <div class="input flex flex-column">
           <label for="paymentTerms">Payment Terms</label>
-          <select required type="text" id="paymentTerms" v-model="paymentTerms">
+          <select required id="paymentTerms" v-model="paymentTerms">
             <option value="30">Net 30 Days</option>
             <option value="60">Net 60 Days</option>
           </select>
@@ -314,9 +314,9 @@ export default {
 
       const data = {
         docId: this.docId,
-        routeId: this.$route.params.invoiceId,
+        routeId: this.$route.params.id,
       };
-
+      
       this.UPDATE_INVOICE(data);
     },
 
