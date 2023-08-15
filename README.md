@@ -1,11 +1,11 @@
 # vue-invoices
 
-##### https://allfreelance.github.io/vue-invoices/
+##### https://peremitins.github.io/vue-invoices/
 
 > Implementation of the application with the ability to add, delete and edit invoices.<br>
 > Used HTML, CSS/SCSS, JS, Vuejs, VueRouter, Vuex, Git, Firebase.
 
-[![](https://github.com/allfreelance/vue-invoices/blob/main/screen.jpg)](https://allfreelance.github.io/vue-invoices/)
+[![](https://github.com/peremitins/vue-invoices/blob/main/screen.jpg)](https://peremitins.github.io/vue-invoices/)
 
 ## Project setup
 
